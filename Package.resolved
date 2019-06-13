@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "HDXLCommonUtilities",
+        "repositoryURL": "https://github.com/plx/HDXLCommonUtilities",
+        "state": {
+          "branch": null,
+          "revision": "b0ce07cab011fb379a4436b6cbb3d3fc414990c2",
+          "version": "0.0.11"
+        }
+      },
+      {
+        "package": "HDXLInterpolation",
+        "repositoryURL": "https://github.com/plx/HDXLInterpolation",
+        "state": {
+          "branch": null,
+          "revision": "7ca166c386a5c223272ac89bbbddda4ca4d80cc8",
+          "version": "0.0.4"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
