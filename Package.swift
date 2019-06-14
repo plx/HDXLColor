@@ -23,6 +23,10 @@ let package = Package(
       from: "0.0.0"
     ),
     .package(
+      url: "https://github.com/plx/HDXLSIMDSupport",
+      from: "0.0.0"
+    ),
+    .package(
       url: "https://github.com/plx/HDXLInterpolation",
       from: "0.0.0"
     )
@@ -34,6 +38,7 @@ let package = Package(
       name: "HDXLColor",
       dependencies: [
         "HDXLCommonUtilities",
+        "HDXLSIMDSupport",
         "HDXLInterpolation"]),
     .testTarget(
       name: "HDXLColorTests",

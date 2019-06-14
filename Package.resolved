@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/plx/HDXLCommonUtilities",
         "state": {
           "branch": null,
-          "revision": "b0ce07cab011fb379a4436b6cbb3d3fc414990c2",
-          "version": "0.0.11"
+          "revision": "16add521813b368c3b84eb068411963c9aea7b6f",
+          "version": "0.0.12"
         }
       },
       {
@@ -17,6 +17,15 @@
           "branch": null,
           "revision": "7ca166c386a5c223272ac89bbbddda4ca4d80cc8",
           "version": "0.0.4"
+        }
+      },
+      {
+        "package": "HDXLSIMDSupport",
+        "repositoryURL": "https://github.com/plx/HDXLSIMDSupport",
+        "state": {
+          "branch": null,
+          "revision": "d58426d4bb160e29a6656fc91a3f36977e374829",
+          "version": "0.0.1"
         }
       }
     ]

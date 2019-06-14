@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import HDXLCommonUtilities
 
 // -------------------------------------------------------------------------- //
 // MARK: XYZColorComponent - Definition

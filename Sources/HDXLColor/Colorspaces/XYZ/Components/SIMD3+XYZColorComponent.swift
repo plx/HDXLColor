@@ -1,5 +1,5 @@
 //
-//  SIMD3+Enumeration.swift
+//  SIMD3+XYZColorComponent.swift
 //
 
 import Foundation
