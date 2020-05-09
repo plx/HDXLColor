@@ -3,7 +3,6 @@
 //
 
 import Foundation
-import simd
 
-public typealias ColorComponentRepresentation = BinaryFloatingPoint & SIMDScalar
+// soon: this will be a named protocol too
 public typealias ColorComponent = Hashable & RawRepresentable & CaseIterable

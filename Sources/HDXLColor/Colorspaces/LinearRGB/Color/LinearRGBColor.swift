@@ -1,5 +1,5 @@
 //
-//  XYZColor.swift
+//  LinearRGBColor.swift
 //
 
 import Foundation
@@ -9,10 +9,10 @@ import HDXLSIMDSupport
 import HDXLInterpolation
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Definition
+// MARK: LinearRGBColor - Definition
 // -------------------------------------------------------------------------- //
 
-public struct XYZColor<Representation:ColorComponentRepresentation> {
+public struct LinearRGBColor<Representation:ColorComponentRepresentation> {
   
   public typealias Storage = SIMD3<Representation>
   
@@ -25,38 +25,8 @@ public struct XYZColor<Representation:ColorComponentRepresentation> {
       return self._storage
     }
   }
-  
+    
   @inlinable
-  public var x: Representation {
-    get {
-      return self._storage[XYZColorComponent.x]
-    }
-    set {
-      self._storage[XYZColorComponent.x] = newValue
-    }
-  }
-  
-  @inlinable
-  public var y: Representation {
-    get {
-      return self._storage[XYZColorComponent.y]
-    }
-    set {
-      self._storage[XYZColorComponent.y] = newValue
-    }
-  }
-
-  @inlinable
-  public var z: Representation {
-    get {
-      return self._storage[XYZColorComponent.z]
-    }
-    set {
-      self._storage[XYZColorComponent.z] = newValue
-    }
-  }
-  
-  @usableFromInline
   internal init(storage: Storage) {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(storage.isFiniteNonNegative)
@@ -67,29 +37,67 @@ public struct XYZColor<Representation:ColorComponentRepresentation> {
   
   @inlinable
   public init(
-    x: Representation,
-    y: Representation,
-    z: Representation) {
+    r: Representation,
+    g: Representation,
+    b: Representation) {
     // /////////////////////////////////////////////////////////////////////////
-    pedantic_assert(x.isFiniteNonNegative)
-    pedantic_assert(y.isFiniteNonNegative)
-    pedantic_assert(z.isFiniteNonNegative)
+    pedantic_assert(r.isFiniteNonNegative)
+    pedantic_assert(g.isFiniteNonNegative)
+    pedantic_assert(b.isFiniteNonNegative)
     defer { pedantic_assert(self.isValid) }
     // /////////////////////////////////////////////////////////////////////////
     self._storage = Storage(
-      x,
-      y,
-      z
+      r,
+      g,
+      b
     )
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Validatable
+// MARK: LinearRGBColor - Property Exposure
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Validatable {
+public extension LinearRGBColor {
+  
+  @inlinable
+  var r: Representation {
+    get {
+      return self._storage[LinearRGBColorComponent.r]
+    }
+    set {
+      self._storage[LinearRGBColorComponent.r] = newValue
+    }
+  }
+  
+  @inlinable
+  var g: Representation {
+    get {
+      return self._storage[LinearRGBColorComponent.g]
+    }
+    set {
+      self._storage[LinearRGBColorComponent.g] = newValue
+    }
+  }
+
+  @inlinable
+  var b: Representation {
+    get {
+      return self._storage[LinearRGBColorComponent.b]
+    }
+    set {
+      self._storage[LinearRGBColorComponent.b] = newValue
+    }
+  }
+
+}
+
+// -------------------------------------------------------------------------- //
+// MARK: LinearRGBColor - Validatable
+// -------------------------------------------------------------------------- //
+
+extension LinearRGBColor : Validatable {
   
   @inlinable
   public var isValid: Bool {
@@ -105,29 +113,29 @@ extension XYZColor : Validatable {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Equatable
+// MARK: LinearRGBColor - Equatable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Equatable {
+extension LinearRGBColor : Equatable {
   
   @inlinable
   public static func ==(
-    lhs: XYZColor<Representation>,
-    rhs: XYZColor<Representation>) -> Bool {
+    lhs: LinearRGBColor<Representation>,
+    rhs: LinearRGBColor<Representation>) -> Bool {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(lhs.isValid)
     pedantic_assert(rhs.isValid)
     // /////////////////////////////////////////////////////////////////////////
     return lhs._storage == rhs._storage
   }
-  
+
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Hashable
+// MARK: LinearRGBColor - Hashable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Hashable {
+extension LinearRGBColor : Hashable {
   
   @inlinable
   public func hash(into hasher: inout Hasher) {
@@ -137,50 +145,50 @@ extension XYZColor : Hashable {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - CustomStringConvertible
+// MARK: LinearRGBColor - CustomStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : CustomStringConvertible {
+extension LinearRGBColor : CustomStringConvertible {
   
   @inlinable
   public var description: String {
     get {
-      return "xyz: (\(self.x), \(self.y), \(self.z))"
+      return "linear-rgb: (\(self.r), \(self.g), \(self.b))"
     }
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - CustomDebugStringConvertible
+// MARK: LinearRGBColor - CustomDebugStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : CustomDebugStringConvertible {
+extension LinearRGBColor : CustomDebugStringConvertible {
   
   @inlinable
   public var debugDescription: String {
     get {
-      return "XYZColor<\(String(reflecting: Representation.self))>(x: (\(self.x), y: \(self.y), z: \(self.z))"
+      return "LinearRGBColor<\(String(reflecting: Representation.self))>(r: (\(self.r), g: \(self.g), b: \(self.b))"
     }
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Codable
+// MARK: LinearRGBColor - Codable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Codable where Representation:Codable {
+extension LinearRGBColor : Codable where Representation:Codable {
   
   // synthesized ok
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - ExpressibleByArrayLiteral
+// MARK: LinearRGBColor - ExpressibleByArrayLiteral
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : ExpressibleByArrayLiteral {
+extension LinearRGBColor : ExpressibleByArrayLiteral {
   
   public typealias ArrayLiteralElement = Representation
   
@@ -192,30 +200,30 @@ extension XYZColor : ExpressibleByArrayLiteral {
     guard
       elements.count == 3,
       elements.allSatisfy({$0.isFiniteNonNegative}) else {
-      fatalError("Tried to construct a literal `XYZColor<\(String(reflecting: Representation.self))>` with \(elements.count) elements (instead of 3): \(elements.description)!")
+      fatalError("Tried to construct a literal `LinearRGBColor<\(String(reflecting: Representation.self))>` with \(elements.count) elements (instead of 3): \(elements.description)!")
     }
     self.init(
-      x: elements[0],
-      y: elements[1],
-      z: elements[2]
+      r: elements[0],
+      g: elements[1],
+      b: elements[2]
     )
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Blendable
+// MARK: LinearRGBColor - Blendable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Blendable {
+extension LinearRGBColor : Blendable {
   
   public typealias BlendingWeight = Representation
   
   @inlinable
   public init(
-    byBlending first: XYZColor<Representation>,
+    byBlending first: LinearRGBColor<Representation>,
     weight firstWeight: Representation,
-    with other: XYZColor<Representation>,
+    with other: LinearRGBColor<Representation>,
     weight otherWeight: Representation) {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(first.isValid)

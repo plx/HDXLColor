@@ -1,100 +1,100 @@
 //
-//  XYZColorComponent.swift
+//  sRGBColorComponents.swift
 //
 
 import Foundation
 import HDXLCommonUtilities
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - Definition
+// MARK: sRGBColorComponent - Definition
 // -------------------------------------------------------------------------- //
 
-@objc(HDXLXYZColorComponent)
-public enum XYZColorComponent : Int {
+@objc(HDXLsRGBColorComponent)
+public enum sRGBColorComponent : Int {
   
-  case x = 0
-  case y = 1
-  case z = 2
+  case r = 0
+  case g = 1
+  case b = 2
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - Equatable
+// MARK: sRGBColorComponent - Equatable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : Equatable {
+extension sRGBColorComponent : Equatable {
   
   @inlinable
   public static func ==(
-    lhs: XYZColorComponent,
-    rhs: XYZColorComponent) -> Bool {
+    lhs: sRGBColorComponent,
+    rhs: sRGBColorComponent) -> Bool {
     return lhs.rawValue == rhs.rawValue
   }
 
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - Comparable
+// MARK: sRGBColorComponent - Comparable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : Comparable {
+extension sRGBColorComponent : Comparable {
   
   @inlinable
   public static func <(
-    lhs: XYZColorComponent,
-    rhs: XYZColorComponent) -> Bool {
+    lhs: sRGBColorComponent,
+    rhs: sRGBColorComponent) -> Bool {
     return lhs.rawValue < rhs.rawValue
   }
 
   @inlinable
   public static func >(
-    lhs: XYZColorComponent,
-    rhs: XYZColorComponent) -> Bool {
+    lhs: sRGBColorComponent,
+    rhs: sRGBColorComponent) -> Bool {
     return lhs.rawValue > rhs.rawValue
   }
 
   @inlinable
   public static func <=(
-    lhs: XYZColorComponent,
-    rhs: XYZColorComponent) -> Bool {
+    lhs: sRGBColorComponent,
+    rhs: sRGBColorComponent) -> Bool {
     return lhs.rawValue <= rhs.rawValue
   }
 
   @inlinable
   public static func >=(
-    lhs: XYZColorComponent,
-    rhs: XYZColorComponent) -> Bool {
+    lhs: sRGBColorComponent,
+    rhs: sRGBColorComponent) -> Bool {
     return lhs.rawValue >= rhs.rawValue
   }
 
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - Hashable
+// MARK: sRGBColorComponent - Hashable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : Hashable {
+extension sRGBColorComponent : Hashable {
   
   // synthesized ok
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - CustomStringConvertible
+// MARK: sRGBColorComponent - CustomStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : CustomStringConvertible {
+extension sRGBColorComponent : CustomStringConvertible {
   
   @inlinable
   public var description: String {
     get {
       switch self {
-      case .x:
-        return ".x"
-      case .y:
-        return ".y"
-      case .z:
-        return ".z"
+      case .r:
+        return ".r"
+      case .g:
+        return ".g"
+      case .b:
+        return ".b"
       }
     }
   }
@@ -102,21 +102,21 @@ extension XYZColorComponent : CustomStringConvertible {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - CustomDebugStringConvertible
+// MARK: sRGBColorComponent - CustomDebugStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : CustomDebugStringConvertible {
+extension sRGBColorComponent : CustomDebugStringConvertible {
   
   @inlinable
   public var debugDescription: String {
     get {
       switch self {
-      case .x:
-        return "XYZColorComponent.x"
-      case .y:
-        return "XYZColorComponent.y"
-      case .z:
-        return "XYZColorComponent.z"
+      case .r:
+        return "sRGBColorComponent.r"
+      case .g:
+        return "sRGBColorComponent.g"
+      case .b:
+        return "sRGBColorComponent.b"
       }
     }
   }
@@ -124,38 +124,38 @@ extension XYZColorComponent : CustomDebugStringConvertible {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - Codable
+// MARK: sRGBColorComponent - Codable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : Codable {
+extension sRGBColorComponent : Codable {
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - RawRepresentable
+// MARK: sRGBColorComponent - RawRepresentable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : RawRepresentable {
+extension sRGBColorComponent : RawRepresentable {
   
   public typealias RawValue = Int
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorComponent - CaseIterable
+// MARK: sRGBColorComponent - CaseIterable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorComponent : CaseIterable {
+extension sRGBColorComponent : CaseIterable {
   
-  public typealias AllCases = [XYZColorComponent]
+  public typealias AllCases = [sRGBColorComponent]
   
   @inlinable
   public static var allCases: AllCases {
     get {
       return [
-        .x,
-        .y,
-        .z
+        .r,
+        .g,
+        .b
       ]
     }
   }

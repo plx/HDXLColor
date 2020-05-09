@@ -1,5 +1,5 @@
 //
-//  XYZColorDelta.swift
+//  HSBColor.swift
 //
 
 import Foundation
@@ -9,10 +9,10 @@ import HDXLSIMDSupport
 import HDXLInterpolation
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Definition
+// MARK: HSBColor - Definition
 // -------------------------------------------------------------------------- //
 
-public struct XYZColorDelta<Representation:ColorComponentRepresentation> {
+public struct HSBColor<Representation:ColorComponentRepresentation> {
   
   public typealias Storage = SIMD3<Representation>
   
@@ -25,77 +25,85 @@ public struct XYZColorDelta<Representation:ColorComponentRepresentation> {
       return self._storage
     }
   }
-  
+    
   @inlinable
-  public var dx: Representation {
-    get {
-      return self._storage[XYZColorComponent.x]
-    }
-    set {
-      self._storage[XYZColorComponent.x] = newValue
-    }
-  }
-
-  @inlinable
-  public var dy: Representation {
-    get {
-      return self._storage[XYZColorComponent.y]
-    }
-    set {
-      self._storage[XYZColorComponent.y] = newValue
-    }
-  }
-
-  @inlinable
-  public var dz: Representation {
-    get {
-      return self._storage[XYZColorComponent.z]
-    }
-    set {
-      self._storage[XYZColorComponent.z] = newValue
-    }
-  }
-  
-  @usableFromInline
   internal init(storage: Storage) {
     // /////////////////////////////////////////////////////////////////////////
-    pedantic_assert(storage.isFinite)
+    pedantic_assert(storage.isFiniteNonNegative)
     defer { pedantic_assert(self.isValid) }
     // /////////////////////////////////////////////////////////////////////////
     self._storage = storage
   }
-
+  
   @inlinable
   public init(
-    dx: Representation,
-    dy: Representation,
-    dz: Representation) {
+    hue: Representation,
+    saturation: Representation,
+    brightness: Representation) {
     // /////////////////////////////////////////////////////////////////////////
-    pedantic_assert(dx.isFinite)
-    pedantic_assert(dy.isFinite)
-    pedantic_assert(dz.isFinite)
+    pedantic_assert(hue.isFiniteNonNegative)
+    pedantic_assert(saturation.isFiniteNonNegative)
+    pedantic_assert(brightness.isFiniteNonNegative)
     defer { pedantic_assert(self.isValid) }
     // /////////////////////////////////////////////////////////////////////////
     self._storage = Storage(
-      x: dx,
-      y: dy,
-      z: dz
+      hue,
+      saturation,
+      brightness
     )
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - Validatable
+// MARK: HSBColor - Property Exposure
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : Validatable {
+public extension HSBColor {
+  
+  @inlinable
+  var hue: Representation {
+    get {
+      return self._storage[HSBColorComponent.hue]
+    }
+    set {
+      self._storage[HSBColorComponent.hue] = newValue
+    }
+  }
+  
+  @inlinable
+  var saturation: Representation {
+    get {
+      return self._storage[HSBColorComponent.saturation]
+    }
+    set {
+      self._storage[HSBColorComponent.saturation] = newValue
+    }
+  }
+
+  @inlinable
+  var brightness: Representation {
+    get {
+      return self._storage[HSBColorComponent.brightness]
+    }
+    set {
+      self._storage[HSBColorComponent.brightness] = newValue
+    }
+  }
+
+}
+
+// -------------------------------------------------------------------------- //
+// MARK: HSBColor - Validatable
+// -------------------------------------------------------------------------- //
+
+extension HSBColor : Validatable {
   
   @inlinable
   public var isValid: Bool {
     get {
       guard
-        self._storage.isFinite else {
+        self._storage.isFiniteNonNegative else {
           return false
       }
       return true
@@ -105,40 +113,29 @@ extension XYZColorDelta : Validatable {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - Equatable
+// MARK: HSBColor - Equatable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : Equatable {
+extension HSBColor : Equatable {
   
   @inlinable
   public static func ==(
-    lhs: XYZColorDelta<Representation>,
-    rhs: XYZColorDelta<Representation>) -> Bool {
+    lhs: HSBColor<Representation>,
+    rhs: HSBColor<Representation>) -> Bool {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(lhs.isValid)
     pedantic_assert(rhs.isValid)
     // /////////////////////////////////////////////////////////////////////////
     return lhs._storage == rhs._storage
   }
-  
-  @inlinable
-  public static func !=(
-    lhs: XYZColorDelta<Representation>,
-    rhs: XYZColorDelta<Representation>) -> Bool {
-    // /////////////////////////////////////////////////////////////////////////
-    pedantic_assert(lhs.isValid)
-    pedantic_assert(rhs.isValid)
-    // /////////////////////////////////////////////////////////////////////////
-    return lhs._storage != rhs._storage
-  }
-  
+
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - Hashable
+// MARK: HSBColor - Hashable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : Hashable {
+extension HSBColor : Hashable {
   
   @inlinable
   public func hash(into hasher: inout Hasher) {
@@ -148,50 +145,50 @@ extension XYZColorDelta : Hashable {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - CustomStringConvertible
+// MARK: HSBColor - CustomStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : CustomStringConvertible {
+extension HSBColor : CustomStringConvertible {
   
   @inlinable
   public var description: String {
     get {
-      return "xyz-delta: (\(self.dx), \(self.dy), \(self.dz))"
+      return "HSB: (\(self.hue), \(self.saturation), \(self.brightness))"
     }
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - CustomDebugStringConvertible
+// MARK: HSBColor - CustomDebugStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : CustomDebugStringConvertible {
+extension HSBColor : CustomDebugStringConvertible {
   
   @inlinable
   public var debugDescription: String {
     get {
-      return "XYZColorDelta<\(String(reflecting: Representation.self))>(dx: (\(self.dx), dy: \(self.dy), dz: \(self.dz))"
+      return "HSBColor<\(String(reflecting: Representation.self))>(hue: (\(self.hue), saturation: \(self.saturation), brightness: \(self.brightness))"
     }
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - Codable
+// MARK: HSBColor - Codable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : Codable where Representation:Codable {
+extension HSBColor : Codable where Representation:Codable {
   
   // synthesized ok
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - ExpressibleByArrayLiteral
+// MARK: HSBColor - ExpressibleByArrayLiteral
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : ExpressibleByArrayLiteral {
+extension HSBColor : ExpressibleByArrayLiteral {
   
   public typealias ArrayLiteralElement = Representation
   
@@ -202,31 +199,31 @@ extension XYZColorDelta : ExpressibleByArrayLiteral {
     // /////////////////////////////////////////////////////////////////////////
     guard
       elements.count == 3,
-      elements.allSatisfy({$0.isFinite}) else {
-      fatalError("Tried to construct a literal `XYZColorDelta<\(String(reflecting: Representation.self))>` with \(elements.count) elements (instead of 2): \(elements.description)!")
+      elements.allSatisfy({$0.isFiniteNonNegative}) else {
+      fatalError("Tried to construct a literal `HSBColor<\(String(reflecting: Representation.self))>` with \(elements.count) elements (instead of 3): \(elements.description)!")
     }
     self.init(
-      dx: elements[0],
-      dy: elements[1],
-      dz: elements[2]
+      hue: elements[0],
+      saturation: elements[1],
+      brightness: elements[2]
     )
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColorDelta - Blendable
+// MARK: HSBColor - Blendable
 // -------------------------------------------------------------------------- //
 
-extension XYZColorDelta : Blendable {
+extension HSBColor : Blendable {
   
   public typealias BlendingWeight = Representation
   
   @inlinable
   public init(
-    byBlending first: XYZColorDelta<Representation>,
+    byBlending first: HSBColor<Representation>,
     weight firstWeight: Representation,
-    with other: XYZColorDelta<Representation>,
+    with other: HSBColor<Representation>,
     weight otherWeight: Representation) {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(first.isValid)
@@ -237,8 +234,8 @@ extension XYZColorDelta : Blendable {
     self.init(
       storage: (
         (first._storage * firstWeight)
-          +
-          (other._storage * otherWeight)
+        +
+        (other._storage * otherWeight)
       )
     )
   }

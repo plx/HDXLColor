@@ -1,5 +1,5 @@
 //
-//  XYZColor.swift
+//  LCHColor.swift
 //
 
 import Foundation
@@ -9,10 +9,10 @@ import HDXLSIMDSupport
 import HDXLInterpolation
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Definition
+// MARK: LCHColor - Definition
 // -------------------------------------------------------------------------- //
 
-public struct XYZColor<Representation:ColorComponentRepresentation> {
+public struct LCHColor<Representation:ColorComponentRepresentation> {
   
   public typealias Storage = SIMD3<Representation>
   
@@ -25,38 +25,8 @@ public struct XYZColor<Representation:ColorComponentRepresentation> {
       return self._storage
     }
   }
-  
+    
   @inlinable
-  public var x: Representation {
-    get {
-      return self._storage[XYZColorComponent.x]
-    }
-    set {
-      self._storage[XYZColorComponent.x] = newValue
-    }
-  }
-  
-  @inlinable
-  public var y: Representation {
-    get {
-      return self._storage[XYZColorComponent.y]
-    }
-    set {
-      self._storage[XYZColorComponent.y] = newValue
-    }
-  }
-
-  @inlinable
-  public var z: Representation {
-    get {
-      return self._storage[XYZColorComponent.z]
-    }
-    set {
-      self._storage[XYZColorComponent.z] = newValue
-    }
-  }
-  
-  @usableFromInline
   internal init(storage: Storage) {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(storage.isFiniteNonNegative)
@@ -67,29 +37,67 @@ public struct XYZColor<Representation:ColorComponentRepresentation> {
   
   @inlinable
   public init(
-    x: Representation,
-    y: Representation,
-    z: Representation) {
+    l: Representation,
+    c: Representation,
+    h: Representation) {
     // /////////////////////////////////////////////////////////////////////////
-    pedantic_assert(x.isFiniteNonNegative)
-    pedantic_assert(y.isFiniteNonNegative)
-    pedantic_assert(z.isFiniteNonNegative)
+    pedantic_assert(l.isFiniteNonNegative)
+    pedantic_assert(c.isFiniteNonNegative)
+    pedantic_assert(h.isFiniteNonNegative)
     defer { pedantic_assert(self.isValid) }
     // /////////////////////////////////////////////////////////////////////////
     self._storage = Storage(
-      x,
-      y,
-      z
+      l,
+      c,
+      h
     )
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Validatable
+// MARK: LCHColor - Property Exposure
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Validatable {
+public extension LCHColor {
+  
+  @inlinable
+  var l: Representation {
+    get {
+      return self._storage[LCHColorComponent.l]
+    }
+    set {
+      self._storage[LCHColorComponent.l] = newValue
+    }
+  }
+  
+  @inlinable
+  var c: Representation {
+    get {
+      return self._storage[LCHColorComponent.c]
+    }
+    set {
+      self._storage[LCHColorComponent.c] = newValue
+    }
+  }
+
+  @inlinable
+  var h: Representation {
+    get {
+      return self._storage[LCHColorComponent.h]
+    }
+    set {
+      self._storage[LCHColorComponent.h] = newValue
+    }
+  }
+
+}
+
+// -------------------------------------------------------------------------- //
+// MARK: LCHColor - Validatable
+// -------------------------------------------------------------------------- //
+
+extension LCHColor : Validatable {
   
   @inlinable
   public var isValid: Bool {
@@ -105,29 +113,29 @@ extension XYZColor : Validatable {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Equatable
+// MARK: LCHColor - Equatable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Equatable {
+extension LCHColor : Equatable {
   
   @inlinable
   public static func ==(
-    lhs: XYZColor<Representation>,
-    rhs: XYZColor<Representation>) -> Bool {
+    lhs: LCHColor<Representation>,
+    rhs: LCHColor<Representation>) -> Bool {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(lhs.isValid)
     pedantic_assert(rhs.isValid)
     // /////////////////////////////////////////////////////////////////////////
     return lhs._storage == rhs._storage
   }
-  
+
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Hashable
+// MARK: LCHColor - Hashable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Hashable {
+extension LCHColor : Hashable {
   
   @inlinable
   public func hash(into hasher: inout Hasher) {
@@ -137,50 +145,50 @@ extension XYZColor : Hashable {
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - CustomStringConvertible
+// MARK: LCHColor - CustomStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : CustomStringConvertible {
+extension LCHColor : CustomStringConvertible {
   
   @inlinable
   public var description: String {
     get {
-      return "xyz: (\(self.x), \(self.y), \(self.z))"
+      return "lch: (\(self.l), \(self.c), \(self.h))"
     }
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - CustomDebugStringConvertible
+// MARK: LCHColor - CustomDebugStringConvertible
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : CustomDebugStringConvertible {
+extension LCHColor : CustomDebugStringConvertible {
   
   @inlinable
   public var debugDescription: String {
     get {
-      return "XYZColor<\(String(reflecting: Representation.self))>(x: (\(self.x), y: \(self.y), z: \(self.z))"
+      return "LCHColor<\(String(reflecting: Representation.self))>(l: (\(self.l), c: \(self.h), h: \(self.h))"
     }
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Codable
+// MARK: LCHColor - Codable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Codable where Representation:Codable {
+extension LCHColor : Codable where Representation:Codable {
   
   // synthesized ok
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - ExpressibleByArrayLiteral
+// MARK: LCHColor - ExpressibleByArrayLiteral
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : ExpressibleByArrayLiteral {
+extension LCHColor : ExpressibleByArrayLiteral {
   
   public typealias ArrayLiteralElement = Representation
   
@@ -192,30 +200,30 @@ extension XYZColor : ExpressibleByArrayLiteral {
     guard
       elements.count == 3,
       elements.allSatisfy({$0.isFiniteNonNegative}) else {
-      fatalError("Tried to construct a literal `XYZColor<\(String(reflecting: Representation.self))>` with \(elements.count) elements (instead of 3): \(elements.description)!")
+      fatalError("Tried to construct a literal `LCHColor<\(String(reflecting: Representation.self))>` with \(elements.count) elements (instead of 3): \(elements.description)!")
     }
     self.init(
-      x: elements[0],
-      y: elements[1],
-      z: elements[2]
+      l: elements[0],
+      c: elements[1],
+      h: elements[2]
     )
   }
   
 }
 
 // -------------------------------------------------------------------------- //
-// MARK: XYZColor - Blendable
+// MARK: LCHColor - Blendable
 // -------------------------------------------------------------------------- //
 
-extension XYZColor : Blendable {
+extension LCHColor : Blendable {
   
   public typealias BlendingWeight = Representation
   
   @inlinable
   public init(
-    byBlending first: XYZColor<Representation>,
+    byBlending first: LCHColor<Representation>,
     weight firstWeight: Representation,
-    with other: XYZColor<Representation>,
+    with other: LCHColor<Representation>,
     weight otherWeight: Representation) {
     // /////////////////////////////////////////////////////////////////////////
     pedantic_assert(first.isValid)

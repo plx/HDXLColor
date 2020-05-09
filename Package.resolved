@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "HDXLAlgebraicUtilities",
+        "repositoryURL": "https://github.com/plx/HDXLAlgebraicUtilities",
+        "state": {
+          "branch": null,
+          "revision": "4f984d0c1141ca13518d1ec4acd6cb749176d9df",
+          "version": "0.0.4"
+        }
+      },
+      {
         "package": "HDXLCommonUtilities",
         "repositoryURL": "https://github.com/plx/HDXLCommonUtilities",
         "state": {
           "branch": null,
-          "revision": "16add521813b368c3b84eb068411963c9aea7b6f",
-          "version": "0.0.12"
+          "revision": "b36b0c9c9b066ff460ac7fb72c9f81f262706bd3",
+          "version": "0.0.40"
         }
       },
       {
@@ -15,8 +24,8 @@
         "repositoryURL": "https://github.com/plx/HDXLInterpolation",
         "state": {
           "branch": null,
-          "revision": "7ca166c386a5c223272ac89bbbddda4ca4d80cc8",
-          "version": "0.0.4"
+          "revision": "1db4c03ddd2249f6b27f99c5225ba5e41f61d0fc",
+          "version": "0.0.5"
         }
       },
       {
@@ -24,8 +33,26 @@
         "repositoryURL": "https://github.com/plx/HDXLSIMDSupport",
         "state": {
           "branch": null,
-          "revision": "d58426d4bb160e29a6656fc91a3f36977e374829",
-          "version": "0.0.1"
+          "revision": "83e51b88cd0582c78ed8b7ab63a9d1a7c3f34cf8",
+          "version": "0.0.15"
+        }
+      },
+      {
+        "package": "HDXLTestingUtilities",
+        "repositoryURL": "https://github.com/plx/HDXLTestingUtilities",
+        "state": {
+          "branch": null,
+          "revision": "a0f5e62f5952e4d3a12c392e5496e8889f9333d6",
+          "version": "0.0.6"
+        }
+      },
+      {
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics",
+        "state": {
+          "branch": null,
+          "revision": "5dfc460876510988560170cee3702ab01b89587a",
+          "version": "0.0.5"
         }
       }
     ]

@@ -1,5 +1,5 @@
 //
-//  SIMD3+XYZColorComponent.swift
+//  SIMD3+LCHColorComponent.swift
 //
 
 import Foundation
@@ -8,7 +8,7 @@ import simd
 internal extension SIMD3 {
   
   @inlinable
-  subscript(component: XYZColorComponent) -> Scalar {
+  subscript(component: LCHColorComponent) -> Scalar {
     get {
       return self[component.rawValue]
     }

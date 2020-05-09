@@ -15,16 +15,24 @@ let package = Package(
     // Products define the executables and libraries produced by a package, and make them visible to other packages.
     .library(
       name: "HDXLColor",
-      targets: ["HDXLColor"]),
+      targets: ["HDXLColor"])
   ],
   dependencies: [
     .package(
       url: "https://github.com/plx/HDXLCommonUtilities",
-      from: "0.0.0"
+      from: "0.0.40"
     ),
     .package(
       url: "https://github.com/plx/HDXLSIMDSupport",
-      from: "0.0.0"
+      from: "0.0.15"
+    ),
+    .package(
+      url: "https://github.com/plx/HDXLTestingUtilities",
+      from: "0.0.6"
+    ),
+    .package(
+      url: "https://github.com/plx/HDXLAlgebraicUtilities",
+      from: "0.0.4"
     ),
     .package(
       url: "https://github.com/plx/HDXLInterpolation",
@@ -39,10 +47,17 @@ let package = Package(
       dependencies: [
         "HDXLCommonUtilities",
         "HDXLSIMDSupport",
-        "HDXLInterpolation"]),
+        "HDXLInterpolation",
+        "HDXLAlgebraicUtilities"
+      ]
+    ),
     .testTarget(
       name: "HDXLColorTests",
-      dependencies: ["HDXLColor"]),
+      dependencies: [
+        "HDXLColor",
+        "HDXLTestingUtilities"
+      ]
+    )
   ]
 )
 
